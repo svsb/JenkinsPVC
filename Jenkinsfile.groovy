@@ -1,4 +1,4 @@
-node('win'){
+node('WIN'){
    try{
 		
        	def gitRepo 	= "github.aig.net/commercial-it-config/devops-esurety-devcicd-1413.git"; 			
@@ -20,7 +20,7 @@ def clonerepo(node_os, repo_url, branch){
  {
 		if(node_os == 'WIN') {
 			
-			//bat "git clone -b master https://github.com/svsb/JenkinsPVC.git";
+			bat "git clone -b master https://github.com/svsb/JenkinsPVC.git";
 			println "Cloned the repo";
 		}
 		else
