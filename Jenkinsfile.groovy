@@ -64,12 +64,11 @@ def executeBuild(node_os){
 			
 			try{
 				if(node_os == 'WIN'){
-				def jdkHome = 'jdk1.6';				
-					withEnv(["JAVA_HOME=${jdkHome}"]){
+				//def jdkHome = 'jdk1.6';				
+					{
 						bat '''
-							cd \\build
-							java -version
-							suretyBuild_custom.bat
+							cd JenkinsPVC
+							${mvnHome} -Dmaven.test.failure.ignore clean package
 						'''
 					}
 				}else{
