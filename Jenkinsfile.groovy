@@ -1,11 +1,11 @@
-node('WIN'){
+node{
    try{
 		
        	def gitRepo 	= "github.aig.net/commercial-it-config/devops-esurety-devcicd-1413.git"; 			
         def branchName  = "master";
-	def node_os = isUnix() ? 'LINUX' : 'WIN';
+	def node_os = 'WIN';
 		//clone the config repo
-		clonerepo(node_os, gitRepo, branchName);	   
+		//clonerepo(node_os);	   
 		//def stageArray = prepareStages();
 		executeBuild(node_os);
    } catch (Exception e){
@@ -16,8 +16,8 @@ node('WIN'){
    }
 }
 
-def clonerepo(node_os, repo_url, branch){
- {
+def clonerepo(node_os){
+ 
 		if(node_os == 'WIN') {
 			
 			bat "git clone -b master https://github.com/svsb/JenkinsPVC.git";
@@ -28,7 +28,7 @@ def clonerepo(node_os, repo_url, branch){
 			//sh "scl enable rh-git29 -- git clone -b ${branch} https://${comm_git_clone_token}@${repo_url}"
 			//println "Cloned the repo";
 		}
-    }
+    
 }
 def executeBuild(node_os){
 
@@ -41,7 +41,8 @@ def executeBuild(node_os){
 			try{
 				if(node_os == 'WIN'){
 				
-					bat "git clone -b master https://github.com/svsb/JenkinsPVC.git";					
+					bat "git clone -b master https://github.com/svsb/JenkinsPVC.git";
+					println "Cloned the repo";
 					
 				}else{
 					//sh 'java -version';
@@ -63,15 +64,15 @@ def executeBuild(node_os){
 			println "Build Automation";
 			
 			try{
-				if(node_os == 'WIN'){
+				if(node_os == 'WIN')
 				//def jdkHome = 'jdk1.6';				
 					{
 						bat '''
 							cd JenkinsPVC
-							${mvnHome} -Dmaven.test.failure.ignore clean package
+							C:/Users/vesopall/Jenkins_Related/Maven/apache-maven-3.5.3/bin/mvn -Dmaven.test.failure.ignore clean package
 						'''
 					}
-				}else{
+				else{
 					///jdkHome = tool 'jdk1.6';
 					//withEnv( ["JAVA_HOME=${jdkHome}"] ){
 					//	
@@ -86,9 +87,8 @@ def executeBuild(node_os){
 					}
 				}
 					
-				println "Build Automation";
 				
-			}catch(Exception e){
+				catch(Exception e){
 				//stageArray.put('Build Automation', 'Failure');
 				throw e;
 			}
